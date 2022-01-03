@@ -19,13 +19,16 @@ function App() {
   const [turns, setTurns] = useState(0)
   const [choiceOne, setChoiceOne] = useState(null)
   const [choiceTwo, setChoiceTwo] = useState(null)
-
+  const [disabled, setDisabled] = useState(false)
   //shuffle cards
 
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }))
+
+    setChoiceOne(null);
+    setChoiceTwo(null);
 
     setCards(shuffledCards)
     setTurns(0)
@@ -38,7 +41,9 @@ function App() {
   }
 
   useEffect(() => {// will be fired on the first time the component mount 
+
     if (choiceOne && choiceTwo) {
+      setDisabled(true)
       if (choiceOne.src === choiceTwo.src) {
         //match
         setCards(prevCards => {
@@ -53,7 +58,7 @@ function App() {
         resetTurn()
       } else {
         //nomatch
-        setTimeout(() => resetTurn(), 100)
+        setTimeout(() => resetTurn(), 1000)
       }
 
     }
@@ -64,8 +69,15 @@ function App() {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns(prevTurns => prevTurns + 1)
-    console.log(turns)
+    setDisabled(false)
+
+    // console.log(turns)
   }
+
+  useEffect(() => {
+    shuffleCards()
+
+  }, [])
   return (
     <div className="App">
       <h1>Magic Match</h1>
@@ -81,9 +93,11 @@ function App() {
             key={card.id}
             handleChoice={handleChoice}
             flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
           />
         ))}
       </div>
+      <p>Turn : {turns}</p>
     </div>
   );
 }
