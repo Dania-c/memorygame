@@ -5,12 +5,12 @@ import SingleCard from './components/SingleCard';
 
 const cardImages = [
   // created outside the component cause it will no tgonna change+ it will not be affected if the app component is rerendered
-  { "src": "/img/helmet-1.png" },
-  { "src": "/img/potion-1.png" },
-  { "src": "/img/ring-1.png" },
-  { "src": "/img/scroll-1.png" },
-  { "src": "/img/shield-1.png" },
-  { "src": "/img/sword-1.png" }
+  { "src": "/img/helmet-1.png", matched: false },
+  { "src": "/img/potion-1.png", matched: false },
+  { "src": "/img/ring-1.png", matched: false },
+  { "src": "/img/scroll-1.png", matched: false },
+  { "src": "/img/shield-1.png", matched: false },
+  { "src": "/img/sword-1.png", matched: false }
 ]
 
 
@@ -37,18 +37,28 @@ function App() {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
   }
 
-  useEffect(() => {
+  useEffect(() => {// will be fired on the first time the component mount 
     if (choiceOne && choiceTwo) {
       if (choiceOne.src === choiceTwo.src) {
-        console.log("match", choiceOne.src)
-
+        //match
+        setCards(prevCards => {
+          return prevCards.map(card => {
+            if (card.src === choiceOne.src) {
+              return { ...card, matched: true }
+            } else {
+              return card
+            }
+          })
+        })
+        resetTurn()
       } else {
-        console.log("nomatch")
-
+        //nomatch
+        setTimeout(() => resetTurn(), 100)
       }
-      resetTurn()
+
     }
-  }, [choiceOne, choiceTwo])
+  }, [choiceOne, choiceTwo])// so this code is fired tow when these 2 states changes
+  console.log(cards)
 
   const resetTurn = () => {
     setChoiceOne(null);
@@ -70,6 +80,7 @@ function App() {
             card={card}
             key={card.id}
             handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
           />
         ))}
       </div>
