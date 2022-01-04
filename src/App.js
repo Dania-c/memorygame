@@ -5,12 +5,18 @@ import SingleCard from './components/SingleCard';
 
 const cardImages = [
   // created outside the component cause it will no tgonna change+ it will not be affected if the app component is rerendered
-  { "src": "/img/helmet-1.png", matched: false },
-  { "src": "/img/potion-1.png", matched: false },
-  { "src": "/img/ring-1.png", matched: false },
-  { "src": "/img/scroll-1.png", matched: false },
-  { "src": "/img/shield-1.png", matched: false },
-  { "src": "/img/sword-1.png", matched: false }
+  // { "src": "/img/helmet-1.png", matched: false },https://pixabay.com/photos/tiger-fence-grid-chain-link-5923710/
+  // { "src": "/img/potion-1.png", matched: false },
+  // { "src": "/img/ring-1.png", matched: false },
+  // { "src": "/img/scroll-1.png", matched: false },
+  // { "src": "/img/shield-1.png", matched: false },
+  // { "src": "/img/sword-1.png", matched: false }
+  { "src": "https://res.cloudinary.com/proda/image/upload/v1632548492/samples/animals/kitten-playing.gif", matched: false },
+  { "src": "https://res.cloudinary.com/proda/image/upload/v1632548487/samples/animals/three-dogs.jpg", matched: false },
+  { "src": "https://res.cloudinary.com/proda/image/upload/v1632548483/samples/animals/reindeer.jpg", matched: false },
+  { "src": "https://res.cloudinary.com/proda/image/upload/v1632548484/samples/sheep.jpg", matched: false },
+  { "src": "https://res.cloudinary.com/proda/image/upload/v1632548483/samples/food/dessert.jpg", matched: false },
+  { "src": "https://res.cloudinary.com/proda/image/upload/v1632548484/samples/food/pot-mussels.jpg", matched: false }
 ]
 
 
@@ -80,7 +86,7 @@ function App() {
   }, [])
   return (
     <div className="App">
-      <h1>Magic Match</h1>
+      <h1>Maria's Cards</h1>
       <button onClick={shuffleCards}>New Game</button>
       <div className="card-grid">
         {cards.map((card) => (
